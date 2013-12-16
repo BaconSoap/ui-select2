@@ -21,7 +21,7 @@ module.exports = function(config) {
       'bower_components/select2/select2.js',
       
       // Source Code
-      'src/select2.js',
+      'dist/select2.min.js',
 
       // Test Specs
       'test/*Spec.js'

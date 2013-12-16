@@ -6,6 +6,7 @@ module.exports = function (grunt) {
   // Loading external tasks
   grunt.loadNpmTasks('grunt-contrib-jshint');
   grunt.loadNpmTasks('grunt-contrib-watch');
+  grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-karma');
 
   // Project configuration.
@@ -36,6 +37,12 @@ module.exports = function (grunt) {
         background: true
       }
     },
+    uglify: {
+      dist: {
+        src: 'src/select2.js',
+        dest: 'dist/select2.min.js'
+      }
+    },
     jshint: {
       all:[
         'gruntFile.js',
@@ -49,8 +56,8 @@ module.exports = function (grunt) {
   };
 
   // Register tasks
-  grunt.registerTask('default', ['jshint', 'karma:unit']);
-  grunt.registerTask('watch', ['jshint', 'karma:watch']);
+  grunt.registerTask('default', ['jshint', 'uglify', 'karma:unit']);
+  grunt.registerTask('watch', ['jshint', 'uglify', 'karma:watch']);
 
   grunt.initConfig(initConfig);
 };
