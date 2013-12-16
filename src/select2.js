@@ -5,7 +5,7 @@
  *     This change is so that you do not have to do an additional query yourself on top of Select2's own query
  * @params [options] {object} The configuration options passed to $.fn.select2(). Refer to the documentation
  */
-angular.module('ui.select2', []).value('uiSelect2Config', {}).directive('uiSelect2', ['uiSelect2Config', '$timeout', function (uiSelect2Config, $timeout) {
+angular.module('ui.select2', []).value('uiSelect2Config', {}).directive('uiSelect2', ['uiSelect2Config', '$timeout', '$sniffer', function (uiSelect2Config, $timeout, $sniffer) {
   var options = {};
   if (uiSelect2Config) {
     angular.extend(options, uiSelect2Config);
@@ -148,6 +148,12 @@ angular.module('ui.select2', []).value('uiSelect2Config', {}).directive('uiSelec
 
           if (!isSelect) {
             // Set the view and model value and update the angular template manually for the ajax/multiple select2.
+            
+            //Ensure this doesn't collide with angular's event binding for IE8
+            if (!$sniffer.hasEvent('input')) {
+              elm.unbind("change");
+            }
+
             elm.bind("change", function (e) {
               e.stopImmediatePropagation();
               
